@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaYatur</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .menu-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            color: #e63946;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #252525;
+            transition: left 0.3s ease-in-out;
+            padding-top: 60px;
+            z-index: 1000;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #333842;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: color 0.3s;
+            font-size: 1.2em;
+        }
+
+        .sidebar ul li a:hover {
+            color: #e63946;
+        }
+
+        .content {
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #e63946;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        p, a {
+            font-size: 1.2em;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #e63946;
+        }
+
+        .btn {
+            background-color: #e63946;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+            margin: 10px 5px;
+            animation: bounce 2s infinite;
+        }
+
+        .btn:hover {
+            background-color: #333842;
+            color: #e63946;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.png') center/cover no-repeat;
+            color: #ffffff;
+            text-align: center;
+            animation: zoomIn 1s;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .hero .btn {
+            font-size: 1.5em;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background-color: #2b2f36;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+            width: 300px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        .feature:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .feature h2 {
+            color: #e63946;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .video {
+            background-color: #2b2f36;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+        }
+
+        .video iframe {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .video h2 {
+            color: #e63946;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .video p {
+            font-size: 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+            margin: 0 auto 10px;
+        }
+
+        .video .details {
+            display: none;
+            text-align: left;
+        }
+
+        .video .details p {
+            white-space: normal;
+        }
+
+        .video.active .details {
+            display: block;
+        }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .game {
+            background-color: #2b2f36;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            height: 400px;
+        }
+
+        .game h2 {
+            color: #e63946;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .game-canvas {
+            background-color: #ffffff;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar ul li a {
+                font-size: 1em;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            p, a, .btn {
+                font-size: 1em;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .hero .btn {
+                font-size: 1.2em;
+            }
+
+            .feature {
+                width: 100%;
+            }
+
+            .video {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div class="menu-icon" onclick="toggleMenu()">
+        &#9776;
+    </div>
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#anasayfa" onclick="showSection('anasayfa')">Anasayfa</a></li>
+            <li><a href="#videolar" onclick="showSection('videolar')">Videolar</a></li>
+            <li><a href="#hakkinda" onclick="showSection('hakkinda')">Hakkımda</a></li>
+            <li><a href="#diger" onclick="showSection('diger')">Diğer</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <section id="anasayfa" class="active">
+            <div class="hero">
+                <h1>CaYatur</h1>
+                <p>Merhaba! Ben CaYa!</p>
+                <button class="btn" onclick="showSection('videolar')">Videoları İzle</button>
+            </div>
+            <div class="container">
+                <h1>Özellikler</h1>
+                <div class="features">
+                    <div class="feature">
+                        <h2>Programlama Dilleri</h2>
+                        <p>C#, Java, HTML, Python</p>
+                    </div>
+                    <div class="feature">
+                        <h2>Hobilerim</h2>
+                        <p>Grafik tasarım, video kurgulama</p>
+                    </div>
+                    <div class="feature">
+                        <h2>Discord</h2>
+                        <p><a href="https://discord.gg/ybRvvC4KTp" target="_blank">cayatur</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="videolar">
+            <div class="container">
+                <h1>Videolar</h1>
+                <div id="video-list" class="video-container">
+                    <div class="video">
+                        <iframe src="https://www.youtube.com/embed/cKmVvI_7KmM" allowfullscreen></iframe>
+                        <h2>Liste Dışı Video</h2>
+                        <p>Bu video liste dışıdır ve sadece bağlantı ile izlenebilir.</p>
+                        <a href="https://youtu.be/cKmVvI_7KmM" target="_blank">Videoyu YouTube'da izle</a>
+                    </div>
+                </div>
+                <button class="btn" onclick="showSection('anasayfa')">Geri</button>
+            </div>
+        </section>
+        <section id="hakkinda">
+            <div class="container">
+                <h1>Hakkımda</h1>
+                <p>Merhaba! Ben CaYa</p>
+                <p>Discord Kullanıcı Adım (Tıklayarakta sunucumuza ulaşabilirsin!): <a href="https://discord.gg/ybRvvC4KTp" target="_blank">cayatur</a></p>
+                <button class="btn" onclick="showSection('anasayfa')">Geri</button>
+            </div>
+        </section>
+        <section id="diger">
+            <div class="container">
+                <h1>Diğer</h1>
+                <p>Burada başka içerikler bulabilirsiniz.</p>
+                <button class="btn" onclick="showSection('anasayfa')">Geri</button>
+            </div>
+        </section>
+    </div>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+            } else {
+                sidebar.style.left = '-250px';
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+         document.addEventListener('DOMContentLoaded', function() {
+            const apiKey = 'AIzaSyCR9RYX6fEVZdWfZRBL-4StGJMRMVfQndU';
+            const channelId = 'UClBa10nqm1ADzfDtIMwHEZQ';
+            const videoContainer = document.getElementById('video-list');
+
+            fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=10`)
+                .then(response => response.json())
+                .then(data => {
+                    const videoIds = data.items.map(item => item.id.videoId).join(',');
+
+                    fetch(`https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&id=${videoIds}&part=snippet,statistics`)
+                        .then(response => response.json())
+                        .then(details => {
+                            details.items.forEach(video => {
+                                const videoElement = document.createElement('div');
+                                videoElement.classList.add('video');
+                                videoElement.innerHTML = `
+                                    <iframe src="https://www.youtube.com/embed/${video.id}" allowfullscreen></iframe>
+                                    <h2>${video.snippet.title}</h2>
+                                    <p>${video.snippet.description}</p>
+                                    <div class="details">
+                                        <p>Görüntüleme: ${video.statistics.viewCount}</p>
+                                        <p>Beğeni: ${video.statistics.likeCount}</p>
+                                        <p>Yorum: ${video.statistics.commentCount}</p>
+                                    </div>
+                                `;
+
+                                videoElement.addEventListener('click', function() {
+                                    videoElement.classList.toggle('active');
+                                });
+
+                                videoContainer.appendChild(videoElement);
+                            });
+                        })
+                        .catch(error => console.error('YouTube API Hatası:', error));
+                })
+                .catch(error => console.error('YouTube API Hatası:', error));
+        });
+    </script>
+</body>
+</html>
