@@ -2,7 +2,7 @@ jobs:
   example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: CaTa
+      - name: CaYa
         env:
           CYAPI: ${{ secrets.YTAPI }}
         run: |
