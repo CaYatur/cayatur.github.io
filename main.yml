@@ -1,0 +1,9 @@
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CaTa
+        env:
+          CYAPI: ${{ secrets.YTAPI }}
+        run: |
+          # API_KEY değişkenini kullanarak işlemler yapabilirsiniz
