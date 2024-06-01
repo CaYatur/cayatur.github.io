@@ -421,7 +421,7 @@
 
          document.addEventListener('DOMContentLoaded', function() {
             //const apiKey = '';
-            const apiKey = "${{ secrets.YTAPI }}";
+            const apiKey = process.env.YTAPI;
             const channelId = 'UClBa10nqm1ADzfDtIMwHEZQ';
             const videoContainer = document.getElementById('video-list');
 
