@@ -14,13 +14,18 @@
         }
 
         .menu-icon {
-            position: absolute;
+            position: fixed;
             top: 15px;
             left: 15px;
             font-size: 30px;
             cursor: pointer;
             z-index: 1001;
             color: #e63946;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-icon:hover {
+            transform: rotate(90deg);
         }
 
         .sidebar {
@@ -266,14 +271,14 @@
             display: block;
         }
 
-        .game-container {
+        .project-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
 
-        .game {
+        .project {
             background-color: #2b2f36;
             padding: 20px;
             border-radius: 10px;
@@ -282,34 +287,69 @@
             width: 100%;
             max-width: 350px;
             text-align: center;
-            height: 400px;
+            cursor: pointer;
+            position: relative;
         }
 
-        .game h2 {
-            color: #e63946;
-            font-size: 1.5em;
+        .project img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
             margin-bottom: 10px;
         }
 
-        .game-canvas {
-            background-color: #ffffff;
+        .project:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+        }
+
+        .project h2 {
+            color: #e63946;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .project p {
+            font-size: 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+            margin: 0 auto 10px;
+        }
+
+        .project-details {
+            display: none;
+        }
+
+        .project-details.active {
             display: block;
-            margin: 0 auto;
+        }
+
+        .project-page {
+            display: none;
+        }
+
+        .project-page.active {
+            display: block;
+            padding: 20px;
+            background-color: #1a1a1a;
+            min-height: 100vh;
+        }
+
+        .project-page img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-page .btn {
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
-            .sidebar ul li a {
-                font-size: 1em;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-
-            p, a, .btn {
-                font-size: 1em;
-            }
-
             .hero h1 {
                 font-size: 2em;
             }
@@ -331,8 +371,51 @@
                 max-width: 100%;
             }
         }
-    </style>
 
+
+        
+
+
+
+
+
+        .project-details-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .project-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 50%;
+            padding: 20px;
+        }
+
+        .project-links {
+            margin-top: 20px;
+            float: right; /* Sağa yasla */
+            width: 200px; /* İstediğin genişlik */
+        }
+
+
+        .project-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+
+
+        
+
+
+
+
+        
+
+    </style>
 </head>
 <body>
     <div class="menu-icon" onclick="toggleMenu()">
@@ -342,6 +425,7 @@
         <ul>
             <li><a href="#anasayfa" onclick="showSection('anasayfa')">Anasayfa</a></li>
             <li><a href="#videolar" onclick="showSection('videolar')">Videolar</a></li>
+            <li><a href="#projeler" onclick="showSection('projeler')">Projeler</a></li>
             <li><a href="#hakkinda" onclick="showSection('hakkinda')">Hakkımda</a></li>
             <li><a href="#diger" onclick="showSection('diger')">Diğer</a></li>
         </ul>
@@ -385,11 +469,29 @@
                 <button class="btn" onclick="showSection('anasayfa')">Geri</button>
             </div>
         </section>
+        <section id="projeler">
+            <div class="container">
+                <h1>Projeler</h1>
+                <div class="project-container">
+                    <div class="project" id="project1" onclick="showProjectDetails('project1')">
+                        <img src="ekilitkirma.png" alt="Project 1">
+                        <h2>E-Kilit Yazılımını Kırma</h2>
+                        <p>E-Kilitin USB ile nasıl kırıldığını göstermekteyim.</p>
+                    </div>
+                    <!-- <div class="project" id="project2" onclick="showProjectDetails('project2')">
+                        <img src="project2.jpg" alt="Project 2">
+                        <h2>Proje 2</h2>
+                        <p>Kısa açıklama 2</p>
+                    </div> -->
+                </div>                
+                <button class="btn" onclick="showSection('anasayfa')">Geri</button>
+            </div>
+        </section>
         <section id="hakkinda">
             <div class="container">
                 <h1>Hakkımda</h1>
                 <p>Merhaba! Ben CaYa</p>
-                <p>Discord Kullanıcı Adım (Tıklayarakta sunucumuza ulaşabilirsin!): <a href="https://discord.gg/ybRvvC4KTp" target="_blank">cayatur</a></p>
+                <p>Discord Kullanıcı Adım (Tıklayarak sunucumuza ulaşabilirsin!): <a href="https://discord.gg/ybRvvC4KTp" target="_blank">cayatur</a></p>
                 <button class="btn" onclick="showSection('anasayfa')">Geri</button>
             </div>
         </section>
@@ -400,6 +502,40 @@
                 <button class="btn" onclick="showSection('anasayfa')">Geri</button>
             </div>
         </section>
+        <section id="project-details" class="project-page">
+            <div class="container">
+                <h1 id="project-title">Proje Detayları</h1>
+                <div class="project-details">
+                    <img id="project-image" src="" alt="Project Image">
+                    <div>
+                        <!--<h2>Açıklama</h2> -->
+                        <p id="project-description"><!--Proje açıklaması burada olacak.--></p>
+                        <p id="project-description-extra"><!--Ek açıklama burada olacak.--></p> <!-- Yeni satır -->
+                        <p id="project-description-extra2"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra3"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra4"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra5"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra6"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra7"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra8"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra9"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra10"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra11"><!--Ek açıklama burada olacak.--></p> 
+                        <p id="project-description-extra12"><!--Ek açıklama burada olacak.--></p> 
+                    </div>
+                    <div>
+                        <br>
+                        <h2>Bağlantılar</h2>
+                        <ul id="project-links">
+                            <!-- Bağlantılar burada olacak -->
+                        </ul>
+                        <br>
+                    </div>
+                </div>
+                <button class="btn" onclick="showSection('projeler')">Geri</button>
+            </div>
+        </section>
+        
     </div>
     <script>
         function toggleMenu() {
@@ -417,11 +553,84 @@
                 section.classList.remove('active');
             });
             document.getElementById(sectionId).classList.add('active');
+
+            // Menü seçildikten sonra gizle
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.left = '-250px';
         }
 
-         document.addEventListener('DOMContentLoaded', function() {
+        function showProjectDetails(projectId) {
+            // Proje detaylarını getir
+            const projectData = {
+                'project1': {
+                    title: 'E-Kilit Yazılımını Kırma',
+                    image: 'ekilitkirma.png',
+                    description: 'E-Kilit yazılımı nasıl kırılır?',
+                    extraDescription: 'Kurulum talimatı (Tek seferliğine mahsustur.)', // Yeni satır
+                    extraDescription2: 'İlk önce E-KilitKırma.rar indirin.', // Yeni satır
+                    extraDescription3: 'ardından içindeki dosyayı ayıklayın ve USB belleğin yerel konumuna tüm dosyaları attın.', // Yeni satır
+                    extraDescription4: '.NET 6.0 Desktop Runtime (v6.0.29) - Windows x64 indirin ve bunuda USB belleğe attın.', // Yeni satır
+                    extraDescription5: 'ardından hedef cihaza takın ve .NET 6.0 Desktop Runtime (v6.0.29) - Windows x64 kurun.', // Yeni satır
+                    extraDescription6: 'Daha sonra ise CYAR.exe yi YÖNETİCİ OLARAK ÇALIŞTIRIN.', // Yeni satır
+                    extraDescription7: 'Kurulum işlemleri biticek ve oturumu yeniden açtıktan sonra gerçek zamanlı engelleme açılınca USB belleğinizi çıkarabilirsiniz!', // Yeni satır
+                    extraDescription8: 'Daha sonra açmak için', // Yeni satır
+                    extraDescription9: 'Yalnızca USB belleği takmanız açılması için yeter (unutmayın gerçek zamanlı engelleme açılınca USB belleği çıkarabilirsiniz!)', // Yeni satır
+
+                    links: [
+                        { name: 'İndirme Linki (Şifre Sorarsa: wRBO82wlxVnL_Tu9fNjDTJ7tSp9R3ClATAe6OTGMdE4 )', url: 'https://mega.nz/file/O9h0DT5Z#wRBO82wlxVnL_Tu9fNjDTJ7tSp9R3ClATAe6OTGMdE4' },
+                        { name: 'Microsoft .Net', url: 'https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.29-windows-x64-installer' },
+                        { name: 'E-Kilit Yazılımını Kırma Videosu', url: 'https://www.youtube.com/watch?v=aei4R9vD2ZA' },
+                    ],
+                },
+                'project2': {
+                    title: 'Proje 2',
+                    image: 'project2.jpg',
+                    description: 'Proje 2 hakkında detaylı bilgi burada olacak.',
+                    extraDescription: 'Ek açıklama 2', // Yeni satır
+                    links: [
+                        { name: 'GitHub', url: 'https://github.com/' },
+                        { name: 'Demo', url: 'https://demo.com/' }
+                    ]
+                }
+            };
+
+            const project = projectData[projectId];
+            if (project) {
+                document.getElementById('project-title').textContent = project.title;
+                document.getElementById('project-image').src = project.image;
+                document.getElementById('project-description').textContent = project.description;
+                document.getElementById('project-description-extra').textContent = project.extraDescription; // Yeni satır
+                document.getElementById('project-description-extra2').textContent = project.extraDescription2; // Yeni satır
+                document.getElementById('project-description-extra3').textContent = project.extraDescription3;
+                document.getElementById('project-description-extra4').textContent = project.extraDescription4;
+                document.getElementById('project-description-extra5').textContent = project.extraDescription5;
+                document.getElementById('project-description-extra6').textContent = project.extraDescription6;
+                document.getElementById('project-description-extra7').textContent = project.extraDescription7;
+                document.getElementById('project-description-extra8').textContent = project.extraDescription8;
+                document.getElementById('project-description-extra9').textContent = project.extraDescription9;
+                document.getElementById('project-description-extra10').textContent = project.extraDescription10;
+                document.getElementById('project-description-extra11').textContent = project.extraDescription11;
+                document.getElementById('project-description-extra12').textContent = project.extraDescription12;
+                
+                const projectLinks = document.getElementById('project-links');
+                projectLinks.innerHTML = '';
+                project.links.forEach(link => {
+                    const linkElement = document.createElement('li');
+                    const linkAnchor = document.createElement('a');
+                    linkAnchor.href = link.url;
+                    linkAnchor.textContent = link.name;
+                    linkAnchor.target = '_blank';
+                    linkElement.appendChild(linkAnchor);
+                    projectLinks.appendChild(linkElement);
+                });
+
+                showSection('project-details');
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
             const apiKey = 'AIzaSyCR9RYX6fEVZdWfZRBL-4StGJMRMVfQndU';
-            //const apiKey = process.env.YTAPI;
             const channelId = 'UClBa10nqm1ADzfDtIMwHEZQ';
             const videoContainer = document.getElementById('video-list');
 
